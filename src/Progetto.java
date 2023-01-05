@@ -269,6 +269,7 @@ public class Progetto {
 	// main, ma i propri test.
 	// 
 	public static void main(String[] args) {
+		
 		// Eseguiamo tutti i test
 		int counter=0;				//conta gli errori
 		long[] det = new long[2];
@@ -306,8 +307,10 @@ public class Progetto {
 			}else {
 				System.out.println();
 			}
+			
 		}
 		System.out.println("\n ho trovato " + counter +" errori");
+		
 	}
 }
 
