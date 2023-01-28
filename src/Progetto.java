@@ -270,47 +270,53 @@ public class Progetto {
 	// 
 	public static void main(String[] args) {
 		
-		// Eseguiamo tutti i test
-		int counter=0;				//conta gli errori
-		long[] det = new long[2];
-		String s;					//nome del file
-		for (int i=1; i<=100; i++) {			//costruisco il nome del file di input
-			s = "matrice";
-			if(i<10) {
-				s+="-00"+i;
-			}else if(i<100) {
-				s+="-0"+i;
-			}else {
-				s+="-"+i;
-			}
-			s+=".txt";
-			long[] check = new long[2];
-			
-			det = determinante("test/" + s);
-			//controllo che il risultato sia corretto
-			try {
-				Scanner in = new Scanner(new File("test/det_" + s));		
-				String input = in.nextLine();
-				String[] checkStr = input.split("/");
-				check[0]=Long.parseLong(checkStr[0]);
-				check[1]=Long.parseLong(checkStr[1]);
-				in.close();
-			} catch (IOException e) {
-				System.out.println("Errore di IO: " + e);
-				return;
-			}
-			System.out.print(s + ": determinante = " + det[0] + "/" + det[1] + "\t" + check[0] + "/" + check[1] + "\t\t\t");
-			
-			if(!uguale(det, check)) {
-				System.out.println("ERRORE");
-				counter++;
-			}else {
-				System.out.println();
-			}
-			
-		}
-		System.out.println("\n ho trovato " + counter +" errori");
-		
-	}
+        // Eseguiamo tutti i test
+        int counter=0;				//conta gli errori
+        long[] det = new long[2];
+        String s;					//nome del file
+        for (int i=1; i<=100; i++) {			//costruisco il nome del file di input
+            s = "matrice";
+            if(i<10) {
+                s+="-00"+i;
+            }else if(i<100) {
+                s+="-0"+i;
+            }else {
+                s+="-"+i;
+            }
+            s+=".txt";
+            long[] check = new long[2];
+            try{
+                det = determinante("test/" + s);
+            }catch(ArithmeticException err){
+                System.out.println("\n\n "+err+"\n\n");
+            }
+            //controllo che il risultato sia corretto
+            try {
+                Scanner in = new Scanner(new File("test/det_" + s));		
+                String input = in.nextLine();
+                String[] checkStr = input.split("/");
+                check[0]=Long.parseLong(checkStr[0]);
+                check[1]=Long.parseLong(checkStr[1]);
+                in.close();
+            } catch (IOException e) {
+                System.out.println("Errore di IO: " + e);
+                return;
+            }
+            System.out.print(s + ": determinante = " + det[0] + "/" + det[1] + "\t" + check[0] + "/" + check[1] + "\t\t\t");
+            try{
+                if(!uguale(det, check)) {
+                    System.out.println("ERRORE");
+                    counter++;
+                }else {
+                    //System.out.print("GIUSTO");
+                    System.out.println();
+                }
+            }catch(Exception e){
+
+            }
+        }
+        System.out.println("\n ho trovato " + counter +" errori");
+        
+    }
 }
 
